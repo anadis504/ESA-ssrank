@@ -7,21 +7,25 @@
 #include "MEF.hpp"
 #include "SBWT.hh"
 #include "SubsetBlockedCorrectionSets.hh"
+#include "SubsetBlockedSplit8.hh"
+#include "SubsetBlockedSplit9.hh"
 #include "SubsetConcatRank.hh"
 #include "SubsetConcatSplitLenthsRank.hh"
+#include "SubsetCorrectionSets.hh"
 #include "SubsetMatrixRank.hh"
 #include "SubsetNewConcatRank.hh"
 #include "SubsetNewPlainConcatRank.hh"
 #include "SubsetNewSplitRank.hh"
-#include "SubsetCorrectionSets.hh"
 #include "SubsetSplitRank.hh"
+#include "SubsetSplitRankPred8.hh"
 #include "SubsetSplitSmallerSizeRank.hh"
 #include "SubsetWT.hh"
 #include "cxxopts.hpp"
 #include "globals.hh"
 #include "stdlib_printing.hh"
-#include "SubsetBlockedSplit.hh"
-#include "SubsetSplitRankPred8.hh"
+#include "SubsetFixedBlockCorrectionSets1.hh"
+#include "SubsetFixedBlockCorrectionSets2.hh"
+#include "SubsetFixedBlockCorrectionSets3.hh"
 
 namespace sbwt {
 
@@ -96,10 +100,20 @@ typedef SBWT<
     SubsetBlockedCorrectionSetsRank<sdsl::bit_vector, sdsl::rank_support_v5<>>>
     blocked_correction_sets_sbwt_t;
 typedef SBWT<
-    SubsetBlockedSplitRank<sdsl::bit_vector, sdsl::rank_support_v5<>>>
-    blocked_split_sbwt_t;
+    SubsetFixedBlockCorrectionSetsRank1<sdsl::bit_vector, sdsl::rank_support_v5<>>>
+    fixed_block_correction_sets1_sbwt_t;
+typedef SBWT<
+    SubsetFixedBlockCorrectionSetsRank2<sdsl::bit_vector, sdsl::rank_support_v5<>>>
+    fixed_block_correction_sets2_sbwt_t;
+typedef SBWT<
+    SubsetFixedBlockCorrectionSetsRank3<sdsl::bit_vector, sdsl::rank_support_v5<>>>
+    fixed_block_correction_sets3_sbwt_t;
+typedef SBWT<SubsetBlockedSplitRank8<sdsl::bit_vector, sdsl::rank_support_v5<>>>
+    blocked8_split_sbwt_t;
+typedef SBWT<SubsetBlockedSplitRank9<sdsl::bit_vector, sdsl::rank_support_v5<>>>
+    blocked9_split_sbwt_t;
 typedef SBWT<SubsetSplitRankPred8<mod_ef_vector<>, mod_ef_vector<>::rank_1_type,
-                             sdsl::bit_vector, sdsl::rank_support_v5<>>>
+                                  sdsl::bit_vector, sdsl::rank_support_v5<>>>
     pred8_split_sbwt_t;
 
 }  // namespace sbwt

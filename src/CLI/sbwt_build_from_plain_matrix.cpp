@@ -162,8 +162,28 @@ int build_from_plain_main(int argc, char** argv) {
         A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_k);
     bytes_written = sbwt.serialize(out.stream);
   }
-  if (variant == "blocked-split") {
-    sbwt::blocked_split_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits, ssupport, k,
+  if (variant == "fixed-block-correction-sets1") {
+    sbwt::fixed_block_correction_sets1_sbwt_t sbwt(
+        A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_k);
+    bytes_written = sbwt.serialize(out.stream);
+  }
+  if (variant == "fixed-block-correction-sets2") {
+    sbwt::fixed_block_correction_sets2_sbwt_t sbwt(
+        A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_k);
+    bytes_written = sbwt.serialize(out.stream);
+  }
+  if (variant == "fixed-block-correction-sets3") {
+    sbwt::fixed_block_correction_sets3_sbwt_t sbwt(
+        A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_k);
+    bytes_written = sbwt.serialize(out.stream);
+  }
+  if (variant == "blocked8-split") {
+    sbwt::blocked8_split_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits, ssupport, k,
+                                    n_kmers, precalc_k);
+    bytes_written = sbwt.serialize(out.stream);
+  }
+  if (variant == "blocked9-split") {
+    sbwt::blocked9_split_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits, ssupport, k,
                                     n_kmers, precalc_k);
     bytes_written = sbwt.serialize(out.stream);
   }

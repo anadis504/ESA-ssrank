@@ -330,8 +330,32 @@ int search_main(int argc, char** argv) {
     number_of_queries +=
         run_queries(input_files, output_files, sbwt, gzip_output);
   }
-  if (variant == "blocked-split") {
-    blocked_split_sbwt_t sbwt;
+  if (variant == "fixed-block-correction-sets1") {
+    fixed_block_correction_sets1_sbwt_t sbwt;
+    sbwt.load(in.stream);
+    number_of_queries +=
+        run_queries(input_files, output_files, sbwt, gzip_output);
+  }
+  if (variant == "fixed-block-correction-sets2") {
+    fixed_block_correction_sets2_sbwt_t sbwt;
+    sbwt.load(in.stream);
+    number_of_queries +=
+        run_queries(input_files, output_files, sbwt, gzip_output);
+  }
+  if (variant == "fixed-block-correction-sets3") {
+    fixed_block_correction_sets3_sbwt_t sbwt;
+    sbwt.load(in.stream);
+    number_of_queries +=
+        run_queries(input_files, output_files, sbwt, gzip_output);
+  }
+  if (variant == "blocked8-split") {
+    blocked8_split_sbwt_t sbwt;
+    sbwt.load(in.stream);
+    number_of_queries +=
+        run_queries(input_files, output_files, sbwt, gzip_output);
+  }
+  if (variant == "blocked9-split") {
+    blocked9_split_sbwt_t sbwt;
     sbwt.load(in.stream);
     number_of_queries +=
         run_queries(input_files, output_files, sbwt, gzip_output);

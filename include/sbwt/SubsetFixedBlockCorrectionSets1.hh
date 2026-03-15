@@ -7,10 +7,9 @@
 
 // The blocked correction set with fixed block size
 // #include "BlockedCorrectionSetsConstant.hh"
-// The blocked correction set with block taking 2^8 subsets per block
-#include "BlockedCorrectionSetsFullyPackedByte.hh"
-// The Fixed block size block correction set with more corrections packed into on word only
-// #include "BlockedCorrectionSetsConstantWordPacked.hh"
+// The Fixed block size blocked correction set with more corrections packed into
+// one word only, subsets per block 2^7
+#include "BlockedCorrectionSetsConstantWordPacked7.hh"
 #include "Pred16.hh"
 #include "Pred8v2.hh"
 #include "globals.hh"
@@ -20,12 +19,12 @@ namespace sbwt {
 using namespace std;
 
 template <typename bitvector_t, typename rank_support_t>
-class SubsetBlockedCorrectionSetsRank {
+class SubsetFixedBlockCorrectionSetsRank1 {
   /* X_bitvector_type nonsingleton_sets;
   X_bitvector_rank_type nonsingleton_sets_rs; */
 
  public:
-  uint64_t _logb = 8;
+  uint64_t _logb = 7;
   uint64_t _b = (uint64_t)1 << _logb;  // number of symbols per block
   BlockedCorrectionSetsBase4RankWordPackedWT<4> the_data_structure;
 
@@ -65,9 +64,9 @@ class SubsetBlockedCorrectionSetsRank {
     return r1 != r2;
   }
 
-  SubsetBlockedCorrectionSetsRank() {}
+  SubsetFixedBlockCorrectionSetsRank1() {}
 
-  SubsetBlockedCorrectionSetsRank(const sdsl::bit_vector& A_bits,
+  SubsetFixedBlockCorrectionSetsRank1(const sdsl::bit_vector& A_bits,
                                   const sdsl::bit_vector& C_bits,
                                   const sdsl::bit_vector& G_bits,
                                   const sdsl::bit_vector& T_bits) {
@@ -226,14 +225,14 @@ class SubsetBlockedCorrectionSetsRank {
 
   void load(istream& is) { the_data_structure.load(is); }
 
-  SubsetBlockedCorrectionSetsRank(
-      const SubsetBlockedCorrectionSetsRank& other) {
+  SubsetFixedBlockCorrectionSetsRank1(
+      const SubsetFixedBlockCorrectionSetsRank1& other) {
     assert(&other != this);  // What on earth are you trying to do?
     operator=(other);
   }
 
-  SubsetBlockedCorrectionSetsRank& operator=(
-      const SubsetBlockedCorrectionSetsRank& other) {
+  SubsetFixedBlockCorrectionSetsRank1& operator=(
+      const SubsetFixedBlockCorrectionSetsRank1& other) {
     if (&other != this) {
       this->the_data_structure = other.the_data_structure;
       return *this;

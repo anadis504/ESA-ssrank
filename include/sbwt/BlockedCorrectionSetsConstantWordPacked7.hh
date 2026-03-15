@@ -23,8 +23,8 @@ class BlockedCorrectionSetsBase4RankWordPackedWT {
   uint64_t n_blocks_in_ub = _ub / _b;
   uint64_t nublocks;
 
-  uint64_t block_constant = 7;
-  uint64_t CS_CONSTANT = 14;
+  uint64_t block_constant = 6;
+  uint64_t CS_CONSTANT = 7;
 
  public:
   BlockedCorrectionSetsBase4RankWordPackedWT() {};
@@ -241,22 +241,22 @@ class BlockedCorrectionSetsBase4RankWordPackedWT {
             correction_set_lengths[2]
             << " " << correction_set_lengths[3] << '\n'; */
           }
-          bi+=2;
+          bi++;
           p_ptr += (local_i + 3) / 4;
 
         } else {
           // the first 4 bits of the first byte is the number of correction
           // sets: at most 0111, so the highest bit = 0
-          ((uint8_t*)(_bits.data() + bi))[0] = total_corrections;
+          ((uint8_t*)(_bits.data() + bi))[0] = total_corrections << 4;
           // now we mark which correction sets are non-empty
           uint8_t cs_flags = 0x0;
           for (int64_t cs = 0; cs < 4; cs++) {
             if (correction_set_lengths[cs]) cs_flags |= (1 << cs);
           }
           // 1st byte: 0111 TGCA
-          ((uint8_t*)(_bits.data() + bi))[1] = cs_flags;
+          ((uint8_t*)(_bits.data() + bi))[0] |= cs_flags;
 
-          int64_t local_i = 2;
+          int64_t local_i = 1;
 
           // Now the correction set positions ranges [0.._b) using _logb bits
           // We set the highest bit to indicate start of a new correction set
@@ -299,7 +299,7 @@ class BlockedCorrectionSetsBase4RankWordPackedWT {
             correction_set_lengths[2]
             << " " << correction_set_lengths[3] << '\n'; */
           }
-          bi += 2;  // move past the words containing the
+          bi += (local_i + 7) / 8;  // move past the words containing the
           fitted_block++;
         }
         // correction sets for this block
@@ -451,9 +451,9 @@ class BlockedCorrectionSetsBase4RankWordPackedWT {
     uint32_t p_ptr;
     if (!jumped) {
       // retrieve the number total size of correction sets
-      uint8_t total_corrections = first_byte;
+      uint8_t total_corrections = first_byte >> 4;
       // get the lower 4 bits indicating which sets are present
-      uint8_t corr_present = ((uint8_t*)(_bits.data() + blockstart + 1))[1];;
+      uint8_t corr_present = first_byte & 0xF;
       // cout << " First byte ";
       // print64bitword(first_byte);
       // get the correction
@@ -466,7 +466,7 @@ class BlockedCorrectionSetsBase4RankWordPackedWT {
         // cout << " I am present " << sym << " need to see ones: " << ones_before_me << "\n";
         uint8_t ones_seen = 0;
         for (uint64_t i = 0; i < total_corrections; i++) {
-          uint16_t bitpos = ((uint8_t*)(_bits.data() + blockstart + 1))[2 + i];
+          uint16_t bitpos = ((uint8_t*)(_bits.data() + blockstart + 1))[1 + i];
           if (bitpos & 1 << 7) ones_seen++;
           if (ones_before_me == ones_seen) {
             // get the 7 lowest bits
@@ -509,7 +509,7 @@ class BlockedCorrectionSetsBase4RankWordPackedWT {
     // uint64_t added = !jumped * (total_corrections + 4 + 7) / 8 + jumped;
     /* uint32_t added = (total_corrections + 4 + 7) / 8;
     if (jumped) added = 1; */
-    uint32_t added = 2;
+    uint32_t added = 1;
 
     const uint64_t* blockwords =
         _bits.data() + blockstart + 1 +
@@ -634,6 +634,6 @@ class BlockedCorrectionSetsBase4RankWordPackedWT {
     nublocks = _n / _ub + 1;
     cout << "Constant size correction sets split, max corrections per block: "
          << CS_CONSTANT << " block size " << block_constant
-         << " words, _b: " << _b << "\n";
+         << " words, _b: " << _b << " \n";
   }
 };

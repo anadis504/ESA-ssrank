@@ -27,7 +27,11 @@ std::vector<std::string> get_available_variants() {
           "new-plain-concat",
           "new-split",
           "blocked-correction-sets",
-          "blocked-split",
+          "fixed-block-correction-sets1",
+          "fixed-block-correction-sets2",
+          "fixed-block-correction-sets3",
+          "blocked8-split",
+          "blocked9-split",
           "pred8-split"};
 }
 
@@ -275,8 +279,8 @@ int build_main(int argc, char** argv) {
     bytes_written = sbwt.serialize(out.stream);
   }
   if (variant == "split-correction-sets") {
-    sbwt::correction_sets_sbwt_t sbwt(
-        A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_length);
+    sbwt::correction_sets_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits, ssupport,
+                                      k, n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
   }
   if (variant == "split-smaller-size") {
@@ -295,8 +299,8 @@ int build_main(int argc, char** argv) {
     bytes_written = sbwt.serialize(out.stream);
   }
   if (variant == "new-split") {
-    sbwt::new_split_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits, ssupport,
-                                      k, n_kmers, precalc_length);
+    sbwt::new_split_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits, ssupport, k,
+                                n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
   }
   if (variant == "blocked-split-correction-sets") {
@@ -304,14 +308,34 @@ int build_main(int argc, char** argv) {
         A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
   }
-  if (variant == "blocked-split") {
-    sbwt::blocked_split_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits, ssupport, k,
-                                    n_kmers, precalc_length);
+  if (variant == "fixed-block-split-correction-sets1") {
+    sbwt::fixed_block_correction_sets1_sbwt_t sbwt(
+        A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_length);
+    bytes_written = sbwt.serialize(out.stream);
+  }
+  if (variant == "fixed-block-split-correction-sets2") {
+    sbwt::fixed_block_correction_sets2_sbwt_t sbwt(
+        A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_length);
+    bytes_written = sbwt.serialize(out.stream);
+  }
+  if (variant == "fixed-block-split-correction-sets3") {
+    sbwt::fixed_block_correction_sets3_sbwt_t sbwt(
+        A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_length);
+    bytes_written = sbwt.serialize(out.stream);
+  }
+  if (variant == "blocked8-split") {
+    sbwt::blocked8_split_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits, ssupport,
+                                     k, n_kmers, precalc_length);
+    bytes_written = sbwt.serialize(out.stream);
+  }
+  if (variant == "blocked9-split") {
+    sbwt::blocked9_split_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits, ssupport,
+                                     k, n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
   }
   if (variant == "pred8-split") {
     sbwt::pred8_split_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits, ssupport, k,
-                                    n_kmers, precalc_length);
+                                  n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
   }
 
