@@ -132,8 +132,8 @@ int build_from_plain_main(int argc, char** argv) {
                                  n_kmers, precalc_k);
     bytes_written = sbwt.serialize(out.stream);
   }
-  if (variant == "split-correction-sets") {
-    sbwt::split_correction_sets_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits,
+  if (variant == "correction-sets") {
+    sbwt::correction_sets_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits,
                                             ssupport, k, n_kmers, precalc_k);
     bytes_written = sbwt.serialize(out.stream);
   }
@@ -157,8 +157,8 @@ int build_from_plain_main(int argc, char** argv) {
                                       k, n_kmers, precalc_k);
     bytes_written = sbwt.serialize(out.stream);
   }
-  if (variant == "blocked-split-correction-sets") {
-    sbwt::blocked_split_correction_sets_sbwt_t sbwt(
+  if (variant == "blocked-correction-sets") {
+    sbwt::blocked_correction_sets_sbwt_t sbwt(
         A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_k);
     bytes_written = sbwt.serialize(out.stream);
   }

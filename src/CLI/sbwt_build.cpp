@@ -21,12 +21,12 @@ std::vector<std::string> get_available_variants() {
           "plain-subsetwt",
           "rrr-subsetwt",
           "new-concat",
-          "split-correction-sets",
+          "correction-sets",
           "split-smaller-size",
           "concat-split-lengths",
           "new-plain-concat",
           "new-split",
-          "blocked-split-correction-sets",
+          "blocked-correction-sets",
           "blocked-split",
           "pred8-split"};
 }
@@ -275,7 +275,7 @@ int build_main(int argc, char** argv) {
     bytes_written = sbwt.serialize(out.stream);
   }
   if (variant == "split-correction-sets") {
-    sbwt::split_correction_sets_sbwt_t sbwt(
+    sbwt::correction_sets_sbwt_t sbwt(
         A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
   }
@@ -300,7 +300,7 @@ int build_main(int argc, char** argv) {
     bytes_written = sbwt.serialize(out.stream);
   }
   if (variant == "blocked-split-correction-sets") {
-    sbwt::blocked_split_correction_sets_sbwt_t sbwt(
+    sbwt::blocked_correction_sets_sbwt_t sbwt(
         A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
   }

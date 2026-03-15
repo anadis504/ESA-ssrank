@@ -6,14 +6,14 @@
 
 #include "MEF.hpp"
 #include "SBWT.hh"
-#include "SubsetBlockedSplitCorrectionSets.hh"
+#include "SubsetBlockedCorrectionSets.hh"
 #include "SubsetConcatRank.hh"
 #include "SubsetConcatSplitLenthsRank.hh"
 #include "SubsetMatrixRank.hh"
 #include "SubsetNewConcatRank.hh"
 #include "SubsetNewPlainConcatRank.hh"
 #include "SubsetNewSplitRank.hh"
-#include "SubsetSplitCorrectionSets.hh"
+#include "SubsetCorrectionSets.hh"
 #include "SubsetSplitRank.hh"
 #include "SubsetSplitSmallerSizeRank.hh"
 #include "SubsetWT.hh"
@@ -79,8 +79,8 @@ typedef SBWT<SubsetWT<
 typedef SBWT<SubsetNewConcatRank<sdsl::bit_vector, sdsl::rank_support_v5<>>>
     new_concat_sbwt_t;
 typedef SBWT<
-    SubsetSplitCorrectionSetsRank<sdsl::bit_vector, sdsl::rank_support_v5<>>>
-    split_correction_sets_sbwt_t;
+    SubsetCorrectionSetsRank<sdsl::bit_vector, sdsl::rank_support_v5<>>>
+    correction_sets_sbwt_t;
 typedef SBWT<
     SubsetSplitSmallerSizeRank<sdsl::bit_vector, sdsl::rank_support_v5<>>>
     split_smaller_size_sbwt_t;
@@ -93,8 +93,8 @@ typedef SBWT<
 typedef SBWT<SubsetNewSplitRank<sdsl::bit_vector, sdsl::rank_support_v5<>>>
     new_split_sbwt_t;
 typedef SBWT<
-    SubsetBlockedSplitCorrectionSetsRank<sdsl::bit_vector, sdsl::rank_support_v5<>>>
-    blocked_split_correction_sets_sbwt_t;
+    SubsetBlockedCorrectionSetsRank<sdsl::bit_vector, sdsl::rank_support_v5<>>>
+    blocked_correction_sets_sbwt_t;
 typedef SBWT<
     SubsetBlockedSplitRank<sdsl::bit_vector, sdsl::rank_support_v5<>>>
     blocked_split_sbwt_t;

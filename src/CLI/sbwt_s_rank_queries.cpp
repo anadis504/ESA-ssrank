@@ -499,8 +499,8 @@ int s_rank_queries_main(int argc, char** argv) {
     number_of_queries +=
         run_queries(queryfile_p, queryfile_c, outfile, sbwt, gzip_output);
   }
-  if (variant == "split-correction-sets") {
-    split_correction_sets_sbwt_t sbwt;
+  if (variant == "correction-sets") {
+    correction_sets_sbwt_t sbwt;
     sbwt.load(in.stream);
     number_of_queries +=
         run_queries(queryfile_p, queryfile_c, outfile, sbwt, gzip_output);
@@ -529,8 +529,8 @@ int s_rank_queries_main(int argc, char** argv) {
     number_of_queries +=
         run_queries(queryfile_p, queryfile_c, outfile, sbwt, gzip_output);
   }
-  if (variant == "blocked-split-correction-sets") {
-    blocked_split_correction_sets_sbwt_t sbwt;
+  if (variant == "blocked-correction-sets") {
+    blocked_correction_sets_sbwt_t sbwt;
     sbwt.load(in.stream);
     number_of_queries +=
         run_queries(queryfile_p, queryfile_c, outfile, sbwt, gzip_output);

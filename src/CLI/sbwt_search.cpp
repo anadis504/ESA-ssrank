@@ -294,8 +294,8 @@ int search_main(int argc, char** argv) {
     number_of_queries +=
         run_queries(input_files, output_files, sbwt, gzip_output);
   }
-  if (variant == "split-correction-sets") {
-    split_correction_sets_sbwt_t sbwt;
+  if (variant == "correction-sets") {
+    correction_sets_sbwt_t sbwt;
     sbwt.load(in.stream);
     number_of_queries +=
         run_queries(input_files, output_files, sbwt, gzip_output);
@@ -324,8 +324,8 @@ int search_main(int argc, char** argv) {
     number_of_queries +=
         run_queries(input_files, output_files, sbwt, gzip_output);
   }
-  if (variant == "blocked-split-correction-sets") {
-    blocked_split_correction_sets_sbwt_t sbwt;
+  if (variant == "blocked-correction-sets") {
+    blocked_correction_sets_sbwt_t sbwt;
     sbwt.load(in.stream);
     number_of_queries +=
         run_queries(input_files, output_files, sbwt, gzip_output);

@@ -18,7 +18,7 @@ namespace sbwt {
 using namespace std;
 
 template <typename bitvector_t, typename rank_support_t>
-class SubsetBlockedSplitCorrectionSetsRank {
+class SubsetBlockedCorrectionSetsRank {
   /* X_bitvector_type nonsingleton_sets;
   X_bitvector_rank_type nonsingleton_sets_rs; */
 
@@ -63,9 +63,9 @@ class SubsetBlockedSplitCorrectionSetsRank {
     return r1 != r2;
   }
 
-  SubsetBlockedSplitCorrectionSetsRank() {}
+  SubsetBlockedCorrectionSetsRank() {}
 
-  SubsetBlockedSplitCorrectionSetsRank(const sdsl::bit_vector& A_bits,
+  SubsetBlockedCorrectionSetsRank(const sdsl::bit_vector& A_bits,
                                        const sdsl::bit_vector& C_bits,
                                        const sdsl::bit_vector& G_bits,
                                        const sdsl::bit_vector& T_bits) {
@@ -224,14 +224,14 @@ class SubsetBlockedSplitCorrectionSetsRank {
 
   void load(istream& is) { the_data_structure.load(is); }
 
-  SubsetBlockedSplitCorrectionSetsRank(
-      const SubsetBlockedSplitCorrectionSetsRank& other) {
+  SubsetBlockedCorrectionSetsRank(
+      const SubsetBlockedCorrectionSetsRank& other) {
     assert(&other != this);  // What on earth are you trying to do?
     operator=(other);
   }
 
-  SubsetBlockedSplitCorrectionSetsRank& operator=(
-      const SubsetBlockedSplitCorrectionSetsRank& other) {
+  SubsetBlockedCorrectionSetsRank& operator=(
+      const SubsetBlockedCorrectionSetsRank& other) {
     if (&other != this) {
       this->the_data_structure = other.the_data_structure;
       return *this;

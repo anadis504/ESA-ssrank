@@ -121,8 +121,8 @@ int ascii_export_main(int argc, char** argv) {
     sbwt.load(in.stream);
     export_sbwt_variant(sbwt, out);
   }
-  if (variant == "split-correction-sets") {
-    split_correction_sets_sbwt_t sbwt;
+  if (variant == "correction-sets") {
+    correction_sets_sbwt_t sbwt;
     sbwt.load(in.stream);
     export_sbwt_variant(sbwt, out);
   }
@@ -146,8 +146,8 @@ int ascii_export_main(int argc, char** argv) {
     sbwt.load(in.stream);
     export_sbwt_variant(sbwt, out);
   }
-  if (variant == "blocked-split-correction-sets") {
-    blocked_split_correction_sets_sbwt_t sbwt;
+  if (variant == "blocked-correction-sets") {
+    blocked_correction_sets_sbwt_t sbwt;
     sbwt.load(in.stream);
     export_sbwt_variant(sbwt, out);
   }

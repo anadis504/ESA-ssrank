@@ -17,7 +17,7 @@ namespace sbwt {
 using namespace std;
 
 template <typename bitvector_t, typename rank_support_t>
-class SubsetSplitCorrectionSetsRank {
+class SubsetCorrectionSetsRank {
   /* X_bitvector_type nonsingleton_sets;
   X_bitvector_rank_type nonsingleton_sets_rs; */
 
@@ -69,9 +69,9 @@ class SubsetSplitCorrectionSetsRank {
     return r1 != r2;
   }
 
-  SubsetSplitCorrectionSetsRank() {}
+  SubsetCorrectionSetsRank() {}
 
-  SubsetSplitCorrectionSetsRank(const sdsl::bit_vector& A_bits,
+  SubsetCorrectionSetsRank(const sdsl::bit_vector& A_bits,
                                 const sdsl::bit_vector& C_bits,
                                 const sdsl::bit_vector& G_bits,
                                 const sdsl::bit_vector& T_bits) {
@@ -222,13 +222,13 @@ class SubsetSplitCorrectionSetsRank {
     correction_Set_T_pred.load(is);
   }
 
-  SubsetSplitCorrectionSetsRank(const SubsetSplitCorrectionSetsRank& other) {
+  SubsetCorrectionSetsRank(const SubsetCorrectionSetsRank& other) {
     assert(&other != this);  // What on earth are you trying to do?
     operator=(other);
   }
 
-  SubsetSplitCorrectionSetsRank& operator=(
-      const SubsetSplitCorrectionSetsRank& other) {
+  SubsetCorrectionSetsRank& operator=(
+      const SubsetCorrectionSetsRank& other) {
     if (&other != this) {
       this->concat = other.concat;
       this->correction_Set_A_pred = other.correction_Set_A_pred;
