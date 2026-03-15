@@ -1,0 +1,24 @@
+#*
+#* Ignore all files in the build output directories
+#*
+build/*
+bin/
+obj/
+*.o
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+*.class
+*.jar
+*.pyc
+*.pyo
+*.pyd
+*.whl
+*.egg-info/
+dist/
+*.sbwt
+out.txt
+.DS_Store
