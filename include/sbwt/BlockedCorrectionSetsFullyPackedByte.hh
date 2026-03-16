@@ -6,7 +6,7 @@
 using namespace std;
 
 template <int64_t sigma>
-class BlockedCorrectionSetsBase4RankWordPackedWT {
+class BlockedCorrectionSetsBase4RankWordPackedByte {
   uint64_t _logb = 8;
   uint64_t _b = (uint64_t)1 << _logb;  // number of symbols per block
   uint64_t _log_superb = 32;           // make this fit the blocksize
@@ -24,9 +24,9 @@ class BlockedCorrectionSetsBase4RankWordPackedWT {
   uint64_t p_min = 10;
 
  public:
-  BlockedCorrectionSetsBase4RankWordPackedWT() {};
+  BlockedCorrectionSetsBase4RankWordPackedByte() {};
 
-  BlockedCorrectionSetsBase4RankWordPackedWT(
+  BlockedCorrectionSetsBase4RankWordPackedByte(
       const std::string& seq, std::vector<uint64_t> correction_Set_A,
       std::vector<uint64_t> correction_Set_C,
       std::vector<uint64_t> correction_Set_G,
@@ -290,7 +290,7 @@ class BlockedCorrectionSetsBase4RankWordPackedWT {
     _N = _bits.size() * 64;
     _p.resize(p_ptr + 1);
     std::cout
-        << "Finished constructing BlockedCorrectionSetsBase4RankWordPackedWT"
+        << "Finished constructing BlockedCorrectionSetsBase4RankWordPackedByte"
         << " of size " << size_in_bytes() << " bytes" << std::endl;
     std::cout << "P array size: " << _p.size() * sizeof(uint32_t) << " bytes"
               << std::endl;

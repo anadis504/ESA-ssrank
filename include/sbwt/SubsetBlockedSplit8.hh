@@ -24,7 +24,7 @@ class SubsetBlockedSplitRank8 {
  public:
   uint64_t _logb = 8;
   uint64_t _b = (uint64_t)1 << _logb;  // number of symbols per block
-  BlockedSplitBase4RankWordPackedWT<4> the_data_structure;
+  BlockedSplitBase4RankWordPackedByte<4> the_data_structure;
 
   // Count of character c in subsets up to pos, not including pos
   int64_t rank(int64_t pos, char c) const {
@@ -138,7 +138,7 @@ class SubsetBlockedSplitRank8 {
     }
     n_non_singeltons[block_idx] = non_singeltons_positions.size();
 
-    the_data_structure = BlockedSplitBase4RankWordPackedWT<4>(
+    the_data_structure = BlockedSplitBase4RankWordPackedByte<4>(
         Y_str, non_singeltons_positions, non_singleton_cols, n_non_singeltons,
         n, Y_str_idx);
     // For debugging: verify that ranks match

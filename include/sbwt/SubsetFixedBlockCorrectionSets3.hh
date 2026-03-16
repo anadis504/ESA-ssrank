@@ -26,7 +26,7 @@ class SubsetFixedBlockCorrectionSetsRank3 {
  public:
   uint64_t _logb = 6;
   uint64_t _b = (uint64_t)1 << _logb;  // number of symbols per block
-  BlockedCorrectionSetsBase4RankWordPackedWT<4> the_data_structure;
+  BlockedCorrectionSetsBase4Rank67<4> the_data_structure;
 
   // Count of character c in subsets up to pos, not including pos
   int64_t rank(int64_t pos, char c) const {
@@ -163,7 +163,7 @@ class SubsetFixedBlockCorrectionSetsRank3 {
     correction_set_sizes[block_idx * 4 + 2] = correction_Set_G.size();
     correction_set_sizes[block_idx * 4 + 3] = correction_Set_T.size();
 
-    the_data_structure = BlockedCorrectionSetsBase4RankWordPackedWT<4>(
+    the_data_structure = BlockedCorrectionSetsBase4Rank67<4>(
         Y_str, correction_Set_A, correction_Set_C, correction_Set_G,
         correction_Set_T, correction_set_sizes);
 

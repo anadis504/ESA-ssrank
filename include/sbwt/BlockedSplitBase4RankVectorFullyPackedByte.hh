@@ -6,7 +6,7 @@
 using namespace std;
 
 template <int64_t sigma>
-class BlockedSplitBase4RankWordPackedWT {
+class BlockedSplitBase4RankWordPackedByte {
   uint64_t _logb = 8;
   uint64_t _b = (uint64_t)1 << _logb;  // number of symbols per block
   uint64_t _log_superb = 32;           // make this fit the blocksize
@@ -26,9 +26,9 @@ class BlockedSplitBase4RankWordPackedWT {
   uint16_t MASK_FULL = 0xFFFF;
 
  public:
-  BlockedSplitBase4RankWordPackedWT() {};
+  BlockedSplitBase4RankWordPackedByte() {};
 
-  BlockedSplitBase4RankWordPackedWT(
+  BlockedSplitBase4RankWordPackedByte(
       const std::string& seq, std::vector<uint64_t> non_singeltons_positions,
       std::vector<uint8_t> non_singleton_cols,
       std::vector<uint64_t> n_non_singeltons, uint64_t n, uint64_t seq_size) {
@@ -275,7 +275,7 @@ class BlockedSplitBase4RankWordPackedWT {
     _bits.resize(bi + 1);
     _N = _bits.size() * 64;
     _p.resize(p_ptr + 2);  // trim _p to the actual number of entries used
-    std::cerr << "Finished constructing BlockedSplitBase4RankWordPackedWT"
+    std::cerr << "Finished constructing BlockedSplitBase4RankWordPackedByte"
               << " of size " << size_in_bytes() << " bytes" << std::endl;
     std::cerr << "P array size: " << _p.size() * sizeof(uint32_t) << " bytes"
               << std::endl;
