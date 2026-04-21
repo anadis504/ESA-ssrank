@@ -15,7 +15,7 @@ The following commands have been tested to successfully build SBWT on a clean Ub
 ```
 apt-get update
 apt-get install -y g++ gcc cmake git python3-dev g++-8 libz-dev
-git clone https://github.com/algbio/SBWT
+git clone https://github.com/anadis504/ESA-ssrank
 cd SBWT/build
 cmake .. -DCMAKE_CXX_COMPILER=g++-8 -DMAX_KMER_LENGTH=32
 make -j8

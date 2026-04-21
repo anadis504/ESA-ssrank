@@ -278,7 +278,7 @@ int build_main(int argc, char** argv) {
                                  n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
   }
-  if (variant == "split-correction-sets") {
+  if (variant == "correction-sets") {
     sbwt::correction_sets_sbwt_t sbwt(A_bits, C_bits, G_bits, T_bits, ssupport,
                                       k, n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
@@ -303,22 +303,22 @@ int build_main(int argc, char** argv) {
                                 n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
   }
-  if (variant == "blocked-split-correction-sets") {
+  if (variant == "blocked-correction-sets") {
     sbwt::blocked_correction_sets_sbwt_t sbwt(
         A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
   }
-  if (variant == "fixed-block-split-correction-sets1") {
+  if (variant == "fixed-block-correction-sets1") {
     sbwt::fixed_block_correction_sets1_sbwt_t sbwt(
         A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
   }
-  if (variant == "fixed-block-split-correction-sets2") {
+  if (variant == "fixed-block-correction-sets2") {
     sbwt::fixed_block_correction_sets2_sbwt_t sbwt(
         A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);
   }
-  if (variant == "fixed-block-split-correction-sets3") {
+  if (variant == "fixed-block-correction-sets3") {
     sbwt::fixed_block_correction_sets3_sbwt_t sbwt(
         A_bits, C_bits, G_bits, T_bits, ssupport, k, n_kmers, precalc_length);
     bytes_written = sbwt.serialize(out.stream);

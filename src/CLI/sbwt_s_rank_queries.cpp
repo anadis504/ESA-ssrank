@@ -43,30 +43,6 @@ inline void print_vector(const vector<int64_t>& v, writer_t& out) {
   out.write(&newline, 1);
 }
 
-template <typename sbwt_t, typename reader_t, typename writer_t>
-int64_t run_s_rankqueries(reader_t& reader, writer_t& writer,
-                          const sbwt_t& sbwt) {
-  int64_t total_micros = 0;
-  int64_t number_of_queries = 0;
-  while (true) {
-    int64_t len = reader.get_next_read_to_buffer();
-    if (len == 0) break;
-
-    int64_t t0 = cur_time_micros();
-    vector<int64_t> out_buffer = sbwt.streaming_search(reader.read_buf, len);
-    total_micros += cur_time_micros() - t0;
-
-    number_of_queries += out_buffer.size();
-
-    // Write out
-    print_vector(out_buffer, writer);
-  }
-  write_log("us/query: " + to_string((double)total_micros / number_of_queries) +
-                " (excluding I/O etc)",
-            LogLevel::MAJOR);
-  return number_of_queries;
-}
-
 template <typename T>
 std::vector<T> read_file(const char* filename, size_t offset = 0) {
   std::ifstream ifs(filename, std::ios::binary);
@@ -137,6 +113,7 @@ int64_t run_file(const string& infile_p, const string& infile_c,
                 " (excluding I/O etc)",
             LogLevel::MAJOR);
   print_vector(out_buffer, writer);
+  out_buffer.clear();
 
   std::cerr << "Running " << query_chars.size()
             << " s-rank queries with pair: for every srr query run additional "
@@ -176,6 +153,7 @@ int64_t run_file(const string& infile_p, const string& infile_c,
                 " (excluding I/O etc)",
             LogLevel::MAJOR);
   print_vector(out_buffer, writer);
+  out_buffer.clear();
 
   std::cerr << "Running " << query_chars.size()
             << " s-rank queries for all characters: for every srr query run "
@@ -217,6 +195,7 @@ int64_t run_file(const string& infile_p, const string& infile_c,
                 " (excluding I/O etc)",
             LogLevel::MAJOR);
   print_vector(out_buffer, writer);
+  out_buffer.clear();
 
   write_log("Now running on an array of random positions for character A",
             LogLevel::MAJOR);
@@ -347,6 +326,8 @@ int64_t run_file(const string& infile_p, const string& infile_c,
     total_ranks += ans;
     out_buffer.push_back(ans);
   }
+  print_vector(out_buffer, writer);
+  out_buffer.clear();
   std::cerr
       << "On an array of sorted positions (random characters), total ranks: "
       << total_ranks << std::endl;
