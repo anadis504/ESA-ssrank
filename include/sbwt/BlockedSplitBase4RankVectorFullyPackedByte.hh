@@ -118,20 +118,9 @@ class BlockedSplitBase4RankWordPackedByte {
                      (block_num / n_blocks_in_ub) * 4))[3] = ub_sums[3];
 
         psums[0] = psums[1] = psums[2] = psums[3] = 0;
-        /* std::cout << "Processing block starting at position " << i
-                  << " set_position " << sets_processed << '\n';
-        cout << "UB prefix sums: " << ub_sums[0] << " " << ub_sums[1] << " "
-             << ub_sums[2] << " " << ub_sums[3] << '\n'; */
       }
       if (sets_processed % _b == 0) {
-        /* cerr << "Block " << block_num << ", #non-singeltons " << block_m
-             << ", #singletons " << block_s << ", encoding size "
-             << ((bi - p_global_value) * sizeof(uint64_t))
-             << " bytes, "
-             << " padding_used for non-singeltons: " << padding_used
-             << " bytes, overflowing singeltons: " << block_s % 64 << "\n"; */
-        /* cout << " Start of block, i = " << i << " i / _b = " << (i / _b)
-        << '\n'; */
+       
 
         if (block_num % 9 == 0) {
           _p[p_ptr] = (uint32_t)bi;
@@ -141,9 +130,7 @@ class BlockedSplitBase4RankWordPackedByte {
           uint64_t offset = (uint64_t)bi - p_global_value;
           uint64_t inner_i = block_num % 9;
           offset -= inner_i * p_min;
-          /* cout << "Storing offset: " << offset
-               << " for block_num: " << block_num << " inner_i: " << inner_i
-               << '\n'; */
+          
           ((uint8_t*)(_p.data() + p_ptr))[inner_i - 1] = (uint8_t)(offset);
           if (inner_i == 8) {
             p_ptr += 2;
@@ -168,11 +155,7 @@ class BlockedSplitBase4RankWordPackedByte {
           ((uint16_t*)(_bits.data() + bi))[local_i] =
               (uint16_t)block_m << 8 | (uint8_t)curr_pos_16;
         }
-        /* if (block_num > 3400) {
-          cout << "Block " << block_num << " block_m: " << block_m
-               << " start_pos: " << curr_pos
-               << " curr_pos 16 bits: " << curr_pos % _b << '\n';
-        } */
+      
         local_i += 2;
         uint64_t delta = 0;
         uint16_t prev_pos = curr_pos % _b;
@@ -191,8 +174,7 @@ class BlockedSplitBase4RankWordPackedByte {
             local_i++;
             ((uint8_t*)(_bits.data() + bi))[local_i] = (uint8_t)delta;
             bigs_count++;
-            /* cout << "big delta: " << delta << " at block " << block_num
-                 << " position: " << pos << '\n'; */
+           
           } else {
             ((uint8_t*)(_bits.data() + bi))[local_i] =
                 ((uint8_t)delta << 4) | (uint8_t)col;
@@ -211,20 +193,12 @@ class BlockedSplitBase4RankWordPackedByte {
              << 4);  // store the number of big deltas in the correction set
         bi += (local_i + 7) / 8;  // move past the words containing the
         padding_used = (local_i + 7) / 8 * 8 - local_i;
-        // correction sets for this block
-        /* cout << "Pref sums at position " << i << " block index: " << (i / _b)
-        << '\n'; */
+    
         block_s = _b - block_m;
         block_num++;
         s_counter = 0;
         sets_processed += block_m;
-        /* if (block_num > 3400) {
-          cout << "Finished processing block " << block_num
-               << " block_m: " << block_m
-               << " first non-singelton pos: " << curr_pos
-               << " block_s: " << block_s << " bigs_count: " << bigs_count
-               << '\n';
-        } */
+
       }
 
       // Now construct the concat string bits
@@ -315,19 +289,11 @@ class BlockedSplitBase4RankWordPackedByte {
       blockstart += ((uint8_t*)(_p.data() + p_global_offset + 1))[inner_i - 1] +
                     inner_i * p_min;
     }
-    /* cout << "p_global_offset: " << p_global_offset << " block_num: " <<
-       block_num
-         << " blockstart: " << blockstart << '\n'; */
+    
     uint64_t preBlockRank = ((
         uint16_t*)(_bits.data() +
                    blockstart))[sym];  // retrieve the appropriate preblock rank
-    // std::cout << "Querying rank for pos: " << pos << " symbol: " << sym
-    //<< " preBlockRank: " << preBlockRank << '\n';
-    /* if (super_sum) {
-      cout << "Superblock sum for symbol " << sym << " at pos " << pos << " is "
-           << super_sum << " blockstart: " << blockstart
-           << " preBlockRank: " << preBlockRank << '\n';
-    } */
+  
     blockstart++;
     uint64_t block_m = ((uint16_t*)(_bits.data() + blockstart))[0];
     uint64_t curr_pos = 0;
@@ -362,12 +328,7 @@ class BlockedSplitBase4RankWordPackedByte {
       }
     }
 
-    /* if (pos + non_singeltons_before_pos >= 871178) {
-      cout << "At pos " << pos << " querying symbol " << sym
-           << " block_num: " << (pos >> _logb) << " block_m: " << block_m
-           << " curr_pos: " << curr_pos << " sym_rank: " << sym_rank
-           << " bigs_count: " << bigs_count << '\n';
-    } */
+   
     const uint64_t* blockwords =
         _bits.data() + blockstart +
         (block_m + 2 + bigs_count + 7) /
@@ -425,23 +386,10 @@ class BlockedSplitBase4RankWordPackedByte {
       }
       leftOverRank = (sym & 1) ? countpB : countpA;
     }
-    /* if (pos >= 380660) {
-      cout << "Rank for symbol " << sym << " at pos "
-           << pos + non_singeltons_before_pos << ": preblockrank "
-           << preBlockRank << ", full word-singeltons: " << wholeWordRank
-           << " leftOverwsingeltons: " << leftOverRank
-           << " rank for non-singeltons: " << sym_rank
-           << " corrected pos: " << pos
-           << " non_singeltons_before_pos: " << non_singeltons_before_pos
-           << " block_m: " << block_m << ", ub_sum: " << ub_sum << '\n';
-    } */
+    
     int64_t result = preBlockRank + wholeWordRank + leftOverRank + sym_rank +
                      super_sum + ub_sum;
-    /* if (pos >= 645202688) {
-      cout << "all ranks " << preBlockRank << " " << wholeWordRank << " "
-           << leftOverRank << " " << sym_rank << " " << super_sum << " = "
-           << result << '\n';
-    } */
+    
     return result;
   }
 

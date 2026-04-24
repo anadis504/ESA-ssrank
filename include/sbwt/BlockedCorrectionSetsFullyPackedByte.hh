@@ -50,7 +50,9 @@ class BlockedCorrectionSetsBase4RankWordPackedByte {
     // The last block has just the prefix sums (128 bits) but no other data.
     _N = nblocks * (2 * _b + 128 + 64) + corrections * 16 + nblocks * 64;
 
-    cout << "Packed P array + packed prefix sums blocked correction sets split byte packed, block size " << _b << " \n"; 
+    cout << "Packed P array + packed prefix sums blocked correction sets split "
+            "byte packed, block size "
+         << _b << " \n";
     cout << "_n: " << _n << " nblocks: " << nblocks << " _N: " << _N
          << " corrections: " << corrections << " nsblocks: " << nsblocks
          << '\n';
@@ -118,10 +120,6 @@ class BlockedCorrectionSetsBase4RankWordPackedByte {
         psums[0] = psums[1] = psums[2] = psums[3] = 0;
         correction_set_lengths[0] = correction_set_lengths[1] =
             correction_set_lengths[2] = correction_set_lengths[3] = 0;
-        /* std::cout << "Processing block starting at position " << i
-                  << " block_num " << block_num << '\n';
-        cout << "UB prefix sums: " << ub_sums[0] << " " << ub_sums[1] << " "
-             << ub_sums[2] << " " << ub_sums[3] << '\n'; */
       }
       if (i % _b == 0) {
         /* cout << " Start of block, i = " << i << '\n'; */
@@ -140,9 +138,7 @@ class BlockedCorrectionSetsBase4RankWordPackedByte {
           uint64_t offset = (uint64_t)bi - p_global_value;
           uint64_t inner_i = block_num % 5;
           offset -= inner_i * p_min;
-          /* cout << "Storing offset: " << offset
-               << " for block_num: " << block_num << " inner_i: " << inner_i
-               << '\n'; */
+
           if (offset > 0xFF) {
             cerr << "Error: offset " << offset << " too large for block_num "
                  << block_num << " inner_i: " << inner_i << '\n';
@@ -163,9 +159,7 @@ class BlockedCorrectionSetsBase4RankWordPackedByte {
         ((uint16_t*)(_bits.data() + bi))[1] = (uint16_t)psums[1];
         ((uint16_t*)(_bits.data() + bi))[2] = (uint16_t)psums[2];
         ((uint16_t*)(_bits.data() + bi))[3] = (uint16_t)psums[3];
-        /* cout << "Setting prefix sums to: " << psums[0]
-             << " for 1 to: " << psums[1] << " for 2 to: " << psums[2]
-             << " for 3 to: " << psums[3] << '\n'; */
+
         bi++;  // move past the words containing the
         // construct the correction set lengths for this block
         bool full_set = 0;
@@ -179,9 +173,7 @@ class BlockedCorrectionSetsBase4RankWordPackedByte {
             cout << "Correction set " << cs << " size: " << cs_size << " pos "
                  << i << '\n';
           }
-          /* cout << " Correction sets sizes: " << correction_set_sizes[(i / _b)
-          4 + cs] << " "
-               << correction_set_sizes[(i / _b + 1) * 4 + cs] << '\n'; */
+
           // Update psums
         }
         if (full_set) {
@@ -193,9 +185,6 @@ class BlockedCorrectionSetsBase4RankWordPackedByte {
           //  construct the correction sets for this block
           int64_t local_i = 4;
           for (int64_t cs = 0; cs < 4; cs++) {
-            /* cout << "Correction set " << cs << " size: " <<
-               correction_set_lengths[cs]
-                 << '\n'; */
             uint64_t cs_size = correction_set_lengths[cs];
             uint64_t start_pos =
                 correction_set_sizes[(i == 0 ? 0 : (i / _b) * 4) + cs];
@@ -222,18 +211,10 @@ class BlockedCorrectionSetsBase4RankWordPackedByte {
               ((uint8_t*)(_bits.data() + bi))[local_i] = bitpos;
               local_i++;
             }
-            /* cout << " Correction sets sizes: " << correction_set_lengths[0]
-               << " "
-                 << correction_set_lengths[1] << " " <<
-               correction_set_lengths[2]
-                 << " " << correction_set_lengths[3] << '\n'; */
           }
           bi += (local_i + 7) / 8;  // move past the words containing the
           // correction sets for this block
           block_num++;
-          /* cout << "Pref sums at position " << i << " block index: " << (i /
-             _b)
-               << '\n'; */
         }
       }
       // Now construct the concat string bits
@@ -245,8 +226,7 @@ class BlockedCorrectionSetsBase4RankWordPackedByte {
       int highs = 0;
       while (j < 64 && (i + j) < _n) {
         uint8_t sym = seq[i + j];
-        // std::cout << "sym at position " << (i + j) << " is " << (int)sym <<
-        // '\n';
+
         if (sigma == 3)
           sym++;  // for ternary sequences, remap the alphabet from {0,1,2} to
                   // {1,2,3}
@@ -336,13 +316,6 @@ class BlockedCorrectionSetsBase4RankWordPackedByte {
 
     uint64_t preBlockRank = ((uint16_t*)(_bits.data() + blockstart))[sym];
 
-    /* std::cout << "Querying rank for pos: " << pos << " symbol: " << sym
-    << " preBlockRank: " << preBlockRank << '\n'; */
-    /* if (super_sum) {
-      cout << "Superblock sum for symbol " << sym << " at pos " << pos << " is "
-           << super_sum << " blockstart: " << blockstart
-           << " preBlockRank: " << preBlockRank << '\n';
-    } */
     uint64_t correction = 0;
     uint64_t corr_lens_a = ((uint8_t*)(_bits.data() + blockstart + 1))[0];
     uint64_t corr_lens_c = ((uint8_t*)(_bits.data() + blockstart + 1))[1];
@@ -352,7 +325,7 @@ class BlockedCorrectionSetsBase4RankWordPackedByte {
     if (((uint16_t*)(_bits.data() + blockstart + 1))[0] == 0xFFFF) {
       correction = sym ? 0 : (pos & (_b - 1));
       corr_lens_a = corr_lens_c = corr_lens_g = corr_lens_t = 0;
-      //cout << "It happened at pos " << pos << "\n";
+
     } else {
       uint64_t correction_offset =
           ((sym > 0) * corr_lens_a + (sym > 1) * corr_lens_c +
@@ -428,11 +401,6 @@ class BlockedCorrectionSetsBase4RankWordPackedByte {
     }
     int64_t result = preBlockRank + wholeWordRank + leftOverRank +
                      (sym == 0 ? -correction : correction) + super_sum + ub_sum;
-    /*  cout << "symbol " << sym << ", position " << pos << " rank: " << result
-          << ", in word rank: " << wholeWordRank
-          << " leftOverRank: " << leftOverRank
-          << " preblockrank: " << preBlockRank << " ub sum pos: " << ub_sum
-          << " correction : " << correction << '\n'; */
 
     return result;
   }
@@ -471,6 +439,8 @@ class BlockedCorrectionSetsBase4RankWordPackedByte {
     in.read((char*)_p.data(), sizeof(uint32_t) * (_p.size()));
     nsblocks = _n / _super_b + 1;
     nublocks = _n / _ub + 1;
-    cout << "Packed P array + packed prefix sums blocked correction sets split byte packed, block size " << _b << " \n"; 
+    cout << "Packed P array + packed prefix sums blocked correction sets split "
+            "byte packed, block size "
+         << _b << " \n";
   }
 };

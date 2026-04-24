@@ -142,7 +142,7 @@ class SubsetBlockedSplitRank9 {
         Y_str, non_singeltons_positions, non_singleton_cols, n_non_singeltons,
         n, Y_str_idx);
     // For debugging: verify that ranks match
-    rank_support_t A_bits_rs;
+    /* rank_support_t A_bits_rs;
     rank_support_t C_bits_rs;
     rank_support_t G_bits_rs;
     rank_support_t T_bits_rs;
@@ -188,7 +188,7 @@ class SubsetBlockedSplitRank9 {
         exit(1);
         break;
       }
-    }
+    } */
   }
 
   int64_t serialize(ostream& os) const {

@@ -46,7 +46,8 @@ class BlockedSplitBase4RankWordPackedWT {
     // of _b 2-bit symbols. 64 bits for the lengths if the correction sets.
     // The last block has just the prefix sums (128 bits) but no other data.
     _N = nblocks * (2 * _b + 128 + 64) + n_b * 16 + nblocks * 64;
-    cout << "Blocked split for large blocks word packed, delta encoded, delta-P array, packed "
+    cout << "Blocked split for large blocks word packed, delta encoded, "
+            "delta-P array, packed "
             "prefix sums, block size: "
          << _b << "\n";
     cerr << "_n: " << _n << " nblocks: " << nblocks << " _N: " << _N
@@ -66,9 +67,6 @@ class BlockedSplitBase4RankWordPackedWT {
     ub_sums[0] = ub_sums[1] = ub_sums[2] = ub_sums[3] = 0;
 
     uint64_t bi = 0;
-    /* uint16_t* correction_set_lengths = new uint16_t[4];
-    correction_set_lengths[0] = correction_set_lengths[1] =
-        correction_set_lengths[2] = correction_set_lengths[3] = 0; */
     uint64_t block_num = 0;
     uint64_t str_ptr = 0;
     uint64_t block_m = 0;  // number of nonsingelton in the current block
@@ -200,12 +198,7 @@ class BlockedSplitBase4RankWordPackedWT {
         uint64_t giants_count = 0;
         uint64_t delta = 0;
         local_i += 4;
-        /* if (sets_processed > 24337000 && sets_processed < 24339000) {
-          cout << "First meta word: prev_pos = " << prev_pos
-               << ", block_m = " << block_m << " first col = " << (int)curr_col
-               << '\n';
-          print64bitword(((uint64_t*)(_bits.data() + bi))[0]);
-        } */
+
         for (uint64_t _i = start_pos + 1; _i < start_pos + block_m; _i++) {
           uint64_t pos = non_singeltons_positions[_i];
 
@@ -242,14 +235,7 @@ class BlockedSplitBase4RankWordPackedWT {
         uint64_t difference = encoding_size - (block_m / 8);
         ((uint8_t*)(_bits.data() + bi))[3] =
             (uint8_t)difference;  // store the size of the correction set
-        /* if (sets_processed > 24337000 && sets_processed < 24339000) {
-          cout << "First meta word after correction set: bigs_count = "
-               << bigs_count << " giants_count = " << giants_count
-               << " words: " << (int)((local_i + 7) / 8)
-               << " block_m " << block_m << " first pos " << curr_pos << " first
-        col " << (int)curr_col << '\n'; print64bitword(((uint64_t*)(_bits.data()
-        + bi))[0]);
-        } */
+
         bi += (local_i + 7) / 8;  // move past the words containing the
         // correction sets for this block
         /* cout << "Pref sums at position " << i << " block index: " << (i / _b)
@@ -277,16 +263,6 @@ class BlockedSplitBase4RankWordPackedWT {
       bi++;
       i += j;
       sets_processed += j;
-      /* if (j && j < 64) {
-        i += block_m;  // in order to keep i in sync with the actual block size
-        if (i % _b !=
-            0) {  // if we have not finished the block, we need to move the
-          cout << "This should not happen until the end of sequence, i = " << i
-               << " block_m: " << block_m << " block_s: " << block_s
-               << " j: " << j << '\n';
-               exit(1);
-        }
-      } */
     }
 
     if (_n % _b == 0) {
@@ -367,13 +343,7 @@ class BlockedSplitBase4RankWordPackedWT {
     uint64_t preBlockRank = ((
         uint16_t*)(_bits.data() +
                    blockstart))[sym];  // retrieve the appropriate preblock rank
-    // std::cout << "Querying rank for pos: " << pos << " symbol: " << sym
-    //<< " preBlockRank: " << preBlockRank << '\n';
-    /* if (super_sum) {
-      cout << "Superblock sum for symbol " << sym << " at pos " << pos << " is "
-           << super_sum << " blockstart: " << blockstart
-           << " preBlockRank: " << preBlockRank << '\n';
-    } */
+
     uint8_t* meta_ptr = ((uint8_t*)(_bits.data() + blockstart + 1));
     uint16_t block_m = meta_ptr[0];
     block_m = (uint16_t)(block_m << 2) | (meta_ptr[1] >> 6);
@@ -382,17 +352,7 @@ class BlockedSplitBase4RankWordPackedWT {
     uint8_t first_col = meta_ptr[2] & 0xF;
     uint8_t encoding_diff = meta_ptr[3] & 0x3F;
     uint32_t encoding_size = block_m / 8 + encoding_diff;
-    // uint64_t block_m = (uint16_t)(meta >> 16) >> (16 - _logb - 1);
-    // uint64_t first_pos = (meta >> (32 - _logb - 1 - 10)) & ((1 << 10) - 1);
-    // uint8_t first_col = (meta >> 8) & 0xF;
-    // uint8_t encoding_size = (uint8_t)(meta & 0xF);
-    /* if (pos % _b < 1 && pos > 24337000 && pos < 24339000) {
-      cout << "Meta info for block containing pos " << pos
-           << ": block_m: " << block_m << " first_pos: " << first_pos
-           << " first_col: " << (int)first_col
-           << " encoding_size: " << (int)encoding_size << '\n';
-      print64bitword((uint64_t)_bits[blockstart + 1]);
-    } */
+
     // get the correction
     uint64_t empties = 0;
     uint64_t sym_rank = 0;
@@ -478,17 +438,6 @@ class BlockedSplitBase4RankWordPackedWT {
     }
     int64_t result = preBlockRank + wholeWordRank + leftOverRank + sym_rank +
                      super_sum + ub_sum;
-    /* if (pos + non_singeltons_before_pos >= 24337919) {
-    cout << "symbol " << sym << ", position "
-         << pos + non_singeltons_before_pos << " rank: " << result
-         << ", in word rank: " << wholeWordRank
-         << " leftOverRank: " << leftOverRank << " preblockrank: " <<
-    preBlockRank
-         << " empties before pos: " << empties << " sym_rank : " << sym_rank
-         << " corrected pos: " << pos
-         << " non_singeltons_before_pos: " << non_singeltons_before_pos
-         << " block_m: " << block_m << '\n';
-    } */
 
     return result;
   }
@@ -527,6 +476,8 @@ class BlockedSplitBase4RankWordPackedWT {
     in.read((char*)_p.data(), sizeof(uint32_t) * (_p.size()));
     nsblocks = _n / _super_b + 1;
     nublocks = _n / _ub + 1;
-    cout << "Blocked split for large blocks, word packed, delta encoded, delta-P array, packed prefix sums, block size: " << _b << "\n";
+    cout << "Blocked split for large blocks, word packed, delta encoded, "
+            "delta-P array, packed prefix sums, block size: "
+         << _b << "\n";
   }
 };

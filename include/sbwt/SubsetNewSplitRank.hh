@@ -162,7 +162,7 @@ class SubsetNewSplitRank {
     Y = Base4RankVectorWordPacked<4>(Y_str);
 
     // For debugging: verify that ranks match
-    rank_support_t A_bits_rs;
+    /* rank_support_t A_bits_rs;
     rank_support_t C_bits_rs;
     rank_support_t G_bits_rs;
     rank_support_t T_bits_rs;
@@ -199,7 +199,7 @@ class SubsetNewSplitRank {
         std::cerr << "Rank mismatch at position " << i << " for T: " << rT
                   << " vs " << ownT << '\n';
       }
-    }
+    } */
   }
 
   SubsetNewSplitRank(const SubsetNewSplitRank& other) {

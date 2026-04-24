@@ -135,7 +135,7 @@ class SubsetNewPlainConcatRank {
     nonsingleton_lens = Base4RankVector<4>(lens_vec);
     concat = Base4RankVector<4>(Y_str);
 
-    rank_support_t A_bits_rs;
+    /* rank_support_t A_bits_rs;
     rank_support_t C_bits_rs;
     rank_support_t G_bits_rs;
     rank_support_t T_bits_rs;
@@ -171,7 +171,7 @@ class SubsetNewPlainConcatRank {
         std::cerr << "Rank mismatch at position " << i << " for T: " << rT
                   << " vs " << ownT << '\n';
       }
-    }
+    } */
   }
 
   int64_t serialize(ostream& os) const {

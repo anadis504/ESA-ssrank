@@ -156,7 +156,6 @@ class SubsetSplitRank {
     Z_C = Z_bitvector_t(Z_C_plain);
     Z_G = Z_bitvector_t(Z_G_plain);
     Z_T = Z_bitvector_t(Z_T_plain);
-    cerr << "Z_A size " << Z_A.size() << "\n";
 
     sdsl::util::init_support(X_rs, &X);
     sdsl::util::init_support(Z_A_rs, &Z_A);

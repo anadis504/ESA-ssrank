@@ -158,7 +158,7 @@ class SubsetSplitRankPred8 {
     sdsl::util::init_support(Z_T_rs, &Z_T);
 
     // For debugging: verify that ranks match
-    Z_rank_support_t A_bits_rs;
+    /* Z_rank_support_t A_bits_rs;
     Z_rank_support_t C_bits_rs;
     Z_rank_support_t G_bits_rs;
     Z_rank_support_t T_bits_rs;
@@ -195,7 +195,7 @@ class SubsetSplitRankPred8 {
         std::cerr << "Rank mismatch at position " << i << " for T: " << rT
                   << " vs " << ownT << '\n';
       }
-    }
+    } */
   }
 
   SubsetSplitRankPred8(const SubsetSplitRankPred8& other) {
